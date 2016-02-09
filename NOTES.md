@@ -17,3 +17,6 @@ Predicting handwritten digits
   - Neuron pruning when weight is 0 (brain does this, called [synaptic pruning](https://en.wikipedia.org/wiki/Synaptic_pruning))
   - Best trained on this data is like 99% accuracy
   - Going forward is very fast, but going backwards is where we slow down
+
+Other resources
+  - https://www.coursera.org/learn/machine-learning

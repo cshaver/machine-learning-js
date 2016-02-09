@@ -3,7 +3,7 @@
 var math = require('forwardjs-ml-math');
 
 // size of steps made when adjusting weights
-var stepSize = 0.5;
+var stepSize = 0.1;
 
 module.exports = class Neuron {
 

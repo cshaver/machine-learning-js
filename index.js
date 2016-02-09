@@ -4,12 +4,19 @@ var math = require('forwardjs-ml-math');
 var Network = require('./network');
 var mnist = require('mnistjs');
 
-var training = mnist.training.slice(10000);
+var training = mnist.training;
+var testing = mnist.testing;
 
-var network = new Network(400, 50, 10);
+var maxIter = 4000;
+var hiddenLayers = 50;
+
+var network = new Network(400, hiddenLayers, 10);
+
+console.log('Starting training:\n%s hidden layers\n%s max training iterations', hiddenLayers, maxIter);
+console.time('Training time')
 
 // train the neurons to modify the weights
-for (var iter = 0; iter < 40000; iter++) {
+for (var iter = 0; iter < maxIter; iter++) {
   var i = Math.floor(Math.random() * training.length);
   var input = training[i].input;
   var output = training[i].output;
@@ -19,13 +26,16 @@ for (var iter = 0; iter < 40000; iter++) {
   var outputError = math.arraySubtract(hs, output);
 
   network.backward(outputError);
-
   network.updateWeights();
 
-  if (iter % 1000 === 0) {
-    console.log('accuracy at iter %s: %s', iter, accuracy(training));
+  if (iter % 250 === 0) {
+    console.log('Accuracy at iter %s: %s', iter, Math.round(accuracy(testing)*1000)/1000);
   }
 }
+
+console.log('Accuracy at iter %s: %s', maxIter, Math.round(accuracy(testing)*1000)/1000);
+console.timeEnd('Training time')
+console.log('Testing accuracy', accuracy(testing));
 
 function accuracy(data) {
   var correct = 0;
