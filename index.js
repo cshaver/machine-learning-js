@@ -2,33 +2,17 @@
 
 var math = require('forwardjs-ml-math');
 var Network = require('./network');
+var mnist = require('mnistjs');
 
-var data = [
-  {
-    input: [0, 0],
-    output: [0],
-  },
-  {
-    input: [1, 0],
-    output: [1],
-  },
-  {
-    input: [0, 1],
-    output: [1],
-  },
-  {
-    input: [1, 1],
-    output: [0],
-  },
-];
+var training = mnist.training.slice(10000);
 
-var network = new Network(2, 1);
+var network = new Network(400, 50, 10);
 
 // train the neurons to modify the weights
-for (var iter = 0; iter < 100000; iter++) {
-  var i = Math.floor(Math.random() * data.length);
-  var input = data[i].input;
-  var output = data[i].output;
+for (var iter = 0; iter < 40000; iter++) {
+  var i = Math.floor(Math.random() * training.length);
+  var input = training[i].input;
+  var output = training[i].output;
 
   // hypotheses = final output
   var hs = network.forward(input);
@@ -38,36 +22,29 @@ for (var iter = 0; iter < 100000; iter++) {
 
   network.updateWeights();
 
-  if (iter % 1000 === 0) console.log('accuracy at iter %s: %s', iter, accuracy());
+  if (iter % 1000 === 0) {
+    console.log('accuracy at iter %s: %s', iter, accuracy(training));
+  }
 }
 
-// final prediction
-for (var i = 0; i < data.length; i++) {
-  var input = data[i].input;
-  var output = data[i].output;
-
-  // hypotheses = final output
-  var hs = network.forward(input);
-
-  console.log('XOR %s -> %s', data[i].input, Math.round(hs[0] * 100) / 100);
-}
-
-// console.log(andNeuron.weights.map(w => Math.round(w * 100)/100));
-// console.log(orNeuron.weights.map(w => Math.round(w * 100)/100));
-// console.log(outputNeuron.weights.map(w => Math.round(w * 100)/100));
-
-function accuracy() {
+function accuracy(data) {
   var correct = 0;
   for (var i = 0; i < data.length; i++) {
     var input = data[i].input;
     var output = data[i].output;
 
     var hs = network.forward(input);
-    var outputError = math.arraySubtract(hs, output);
 
-    var h = hs[0] > 0.5 ? 1 : 0;
-    if (h === output[0]) correct++;
+    var h = maxElem(hs);
+    if (h === data[i].label) correct++;
   }
-
   return correct / data.length;
+}
+
+function maxElem(array) {
+  var index = 0;
+  for (var i = 1; i < array.length; i++) {
+    if (array[index] < array[i]) index = i;
+  }
+  return index;
 }

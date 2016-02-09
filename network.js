@@ -3,9 +3,15 @@
 var Layer = require('./layer');
 
 module.exports = class Network {
-  constructor (hiddenlayerSize, outputLayerSize) {
-    this.hiddenLayer = new Layer(hiddenlayerSize);
-    this.outputLayer = new Layer(outputLayerSize);
+
+  /**
+   * @param {Number} inputSize
+   * @param {Number} hiddenlayerSize
+   * @param {Number} outputLayerSize
+   */
+  constructor (inputSize, hiddenlayerSize, outputLayerSize) {
+    this.hiddenLayer = new Layer(hiddenlayerSize, inputSize + 1);
+    this.outputLayer = new Layer(outputLayerSize, hiddenlayerSize + 1);
   }
 
   /**

@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "forwardjs-ml-math": "0.0.1"
+    "forwardjs-ml-math": "0.0.1",
+    "mnistjs": "0.0.3"
   }
 }

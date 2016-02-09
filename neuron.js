@@ -1,13 +1,15 @@
 'use strict';
 
 var math = require('forwardjs-ml-math');
-var stepSize = 0.1;
+
+// size of steps made when adjusting weights
+var stepSize = 0.5;
 
 module.exports = class Neuron {
 
-  constructor() {
+  constructor(n) {
     this.weights = [];
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < n; i++) {
       var weight = Math.random() - 0.5;
       this.weights.push(weight);
     }

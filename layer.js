@@ -4,10 +4,10 @@ var math = require('forwardjs-ml-math');
 var Neuron = require('./neuron');
 
 module.exports = class Layer {
-  constructor(size) {
+  constructor(size, inputs) {
     this.neurons = [];
     for (var i = 0; i < size; i++) {
-      var neuron = new Neuron();
+      var neuron = new Neuron(inputs);
       this.neurons.push(neuron);
     }
   }
