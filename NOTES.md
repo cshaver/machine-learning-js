@@ -20,3 +20,7 @@ Predicting handwritten digits
 
 Other resources
   - https://www.coursera.org/learn/machine-learning
+  - Convolutional neural network
+  - Nearest neighbor clustering
+  - Neuron that we created is called a __perceptron__
+  - More layers to a network - usually one hidden layer is enough, depends on a lot of things
