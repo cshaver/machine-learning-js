@@ -27,6 +27,7 @@ module.exports = class Neuron {
    * @returns {Array}
    */
   backward(error) {
+    this.error = error;
     var backErrors = this.weights.map(w => w * error);
     // dont need to change bias
     return backErrors.slice(1);
@@ -35,9 +36,9 @@ module.exports = class Neuron {
   /**
    * @param {Number} error
    */
-  updateWeights(error) {
+  updateWeights() {
     var deltas = this.inputs.map(input => {
-      return error * input * math.sigmoidGradient(this.z) * stepSize;
+      return this.error * input * math.sigmoidGradient(this.z) * stepSize;
     });
 
     this.weights = math.arraySubtract(this.weights, deltas);
